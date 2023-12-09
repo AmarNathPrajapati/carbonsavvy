@@ -1,19 +1,71 @@
 {%extends "template.html" %}
 
 {%block body%}
-        
-        <div class="container p-5">
-        <H1 class="text-center my-5">
-            Predicted Carbon Emission {{data}} %
-        </H1>
 
-        <button class="btn btn-primary d-block mx-auto ">
-            <a class="text-white" href="/">Go Home</a>
-        </button>
-        </div>
+<div class="container p-5">
+    <H4 class="text-center my-3">
+        Predicted Carbon Emission {{pred}} %
+    </H4>
+    <H4 class="text-center my-3">
+        Current Carbon Emission {{cur}} %
+    </H4>
+    <button class="btn btn-primary d-block mx-auto mb-3">
+        <a class="text-white" href="/">Go Home</a>
+    </button>
 
-{%endblock%}        
+    <div style="height: 50vh; width: 100%;">
+        <canvas id="myChart" width="1000" height="500"></canvas>
+    </div>
 
+</div>
 
+<script>
+    var labels = [
+        'Wind Energy Resources',
+        'Fuel Based Vehicles',
+        'Solar Energy Resources',
+        'Garbage in tons',
+        'Electric Vehicles',
+        'Industries',
+        'Forest Area',
+        'Population',
+        'BioEnergy Resources',
+        'Recycled Garbage',
+        'Thermal Energy Resources',
+        'Buildings',
+        'Nuclear Energy Resources',
+        'Carbon Emission(Predicted)%',
+    ]
+ 
+    var predictedData = "{{predictedData}}"
+    var currentData = "{{currentData}}"
 
+    var ctx = document.getElementById("myChart").getContext("2d");
+    var lineChart = new Chart(ctx, {
+        type: "line",
+        data: {
+            labels: labels,
+        datasets: [
+                {
+                    label: "Current",
+                    data: currentData,
+                    fill: false,
+                    borderColor: "#00b4d8",
+                    lineTension: 0.2,
+                },
+                {
+                    label: "Predicted",
+                    data: predictedData,
+                    fill: false,
+                    borderColor: "#52b788",
+                    lineTension: 0.2
+                }
+            ]
+        },
+        options: {
+            responsive: false
+        }
+    });
+</script>
 
+{%endblock%}

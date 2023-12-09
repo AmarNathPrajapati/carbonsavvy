@@ -126,12 +126,16 @@ def predict():
     arr = np.array([[mean1,mean2,mean3,mean4,mean5,mean6,mean7,mean8,mean9,mean10,mean11,mean12,mean13]])
 
     print(arr);
-    prepared_data = my_pipeline.transform(arr)
-    pred = model.predict(prepared_data)
-    pred = round(pred[0],3)
-    entry = Prediction(wind=data1,vehicle=data2,solar=data3,garbage=data4,evehicle=data5,industries=data6,forest=data7,population=data8,bio=data9,recycle=data10,thermal=data11,buildings=data12,nuclear=data13,co2=pred);
-    db.session.add(entry)
-    db.session.commit()
-    return render_template('after.html',data=pred,params=params)
+    # prepared_data = my_pipeline.transform(arr)
+    # pred = model.predict(prepared_data)
+    # pred = round(pred[0],3)
+    # entry = Prediction(wind=data1,vehicle=data2,solar=data3,garbage=data4,evehicle=data5,industries=data6,forest=data7,population=data8,bio=data9,recycle=data10,thermal=data11,buildings=data12,nuclear=data13,co2=pred);
+    # db.session.add(entry)
+    # db.session.commit()
+    pred = 0
+    cur = mean13
+    predictedData = [mean1, mean2, mean3, mean4, mean4, mean5, mean6, mean7, mean8, mean9, mean10, mean11, mean12, mean13, pred];
+    currentData = [3.613524,11.363636,11.136779,0.069170,0.554695,6.284289,68.574901,3.795043,9.549407,408.237154,18.455534,356.674032,12.653063,20.679]
+    return render_template('after.html',pred=pred,cur=cur,params=params, predictedData=predictedData, currentData=currentData)
 
 app.run(debug=True)
