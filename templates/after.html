@@ -13,8 +13,12 @@
         <a class="text-white" href="/">Go Home</a>
     </button>
 
-    <div style="height: 50vh; width: 100%;">
-        <canvas id="myChart" width="1000" height="500"></canvas>
+    <div style="height: 50vh; width: 100%; margin-bottom: 200px;" >
+        <canvas id="lineChart" width="1000" height="500"></canvas>
+    </div>
+
+    <div style="height: 50vh; width: 100%;" >
+        <canvas id="barChart" width="1000" height="500"></canvas>
     </div>
 
 </div>
@@ -40,8 +44,19 @@
     var predictedData = "{{predictedData}}"
     var currentData = "{{currentData}}"
 
-    var ctx = document.getElementById("myChart").getContext("2d");
-    var lineChart = new Chart(ctx, {
+    predictedData = predictedData.split(', ')
+    currentData = currentData.split(', ')
+
+    predictedData[0] = predictedData[0].substring(1, predictedData[0].length);
+    predictedData[13] = predictedData[13].substring(0, predictedData[13].length-2);
+    
+    predictedData.map(i => Number(i))
+    currentData.map(i => Number(i))
+
+
+    console.log(predictedData, currentData)
+    var linectx = document.getElementById("lineChart").getContext("2d");
+    var lineChart = new Chart(linectx, {
         type: "line",
         data: {
             labels: labels,
@@ -58,6 +73,33 @@
                     data: predictedData,
                     fill: false,
                     borderColor: "#52b788",
+                    lineTension: 0.2
+                }
+            ]
+        },
+        options: {
+            responsive: false
+        }
+    });
+
+    var barctx = document.getElementById("barChart").getContext("2d");
+    var barChart = new Chart(barctx, {
+        type: "bar",
+        data: {
+            labels: labels,
+        datasets: [
+                {
+                    label: "Current",
+                    data: currentData,
+                    borderColor: "white",
+                    backgroundColor: "#00b4d8",
+                    lineTension: 0.2,
+                },
+                {
+                    label: "Predicted",
+                    data: predictedData,
+                    borderColor: "white",
+                    backgroundColor: "#52b788",
                     lineTension: 0.2
                 }
             ]
